@@ -1,0 +1,1 @@
+{"version":3,"file":"web-socket-polyfill.d.ts","sourceRoot":"","sources":["../../src/websocket/web-socket-polyfill.ts"],"names":[],"mappings":"AAQA,MAAM,CAAC,OAAO,CAAC,MAAM,SAAS,EAAE,OAAO,MAAM,CAAC,SAAS,CAAC;AACxD,MAAM,CAAC,OAAO,CAAC,MAAM,WAAW,EAAE,OAAO,MAAM,CAAC,WAAW,CAAC"}

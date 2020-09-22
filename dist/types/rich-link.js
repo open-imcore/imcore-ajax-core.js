@@ -1,0 +1,37 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RichLinkSpecialization = void 0;
+var RichLinkSpecialization;
+(function (RichLinkSpecialization) {
+    RichLinkSpecialization["podcastEpisode"] = "podcastEpisode";
+    RichLinkSpecialization["familyInvitation"] = "familyInvitation";
+    RichLinkSpecialization["movieBundle"] = "movieBundle";
+    RichLinkSpecialization["software"] = "software";
+    RichLinkSpecialization["file"] = "file";
+    RichLinkSpecialization["playlist"] = "playlist";
+    RichLinkSpecialization["artist"] = "artist";
+    RichLinkSpecialization["icloudSharing"] = "icloudSharing";
+    RichLinkSpecialization["map"] = "map";
+    RichLinkSpecialization["tvEpisode"] = "tvEpisode";
+    RichLinkSpecialization["news"] = "news";
+    RichLinkSpecialization["radio"] = "radio";
+    RichLinkSpecialization["movie"] = "movie";
+    RichLinkSpecialization["tvShow"] = "tvShow";
+    RichLinkSpecialization["album"] = "album";
+    RichLinkSpecialization["tvSeason"] = "tvSeason";
+    RichLinkSpecialization["podcast"] = "podcast";
+    RichLinkSpecialization["businessChat"] = "businessChat";
+    RichLinkSpecialization["appleTV"] = "appleTV";
+    RichLinkSpecialization["song"] = "song";
+    RichLinkSpecialization["mapCollection"] = "mapCollection";
+    RichLinkSpecialization["audioBook"] = "audioBook";
+    RichLinkSpecialization["musicVideo"] = "musicVideo";
+    RichLinkSpecialization["summarizedLink"] = "summarizedLink";
+    RichLinkSpecialization["walletPass"] = "walletPass";
+    RichLinkSpecialization["appStoreStory"] = "appStoreStory";
+    RichLinkSpecialization["book"] = "book";
+    RichLinkSpecialization["gameCenterInvitation"] = "gameCenterInvitation";
+    RichLinkSpecialization["applePhotosStatus"] = "applePhotosStatus";
+    RichLinkSpecialization["applePhotosMoment"] = "applePhotosMoment";
+})(RichLinkSpecialization = exports.RichLinkSpecialization || (exports.RichLinkSpecialization = {}));
+//# sourceMappingURL=rich-link.js.map
