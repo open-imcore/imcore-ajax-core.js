@@ -1,0 +1,32 @@
+{
+  "name": "imcore-ajax-core",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/open-imcore/imcore-ajax-core.js.git"
+  },
+  "author": "Eric Rabil <ericjrabil@gmail.com>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/open-imcore/imcore-ajax-core.js/issues"
+  },
+  "homepage": "https://github.com/open-imcore/imcore-ajax-core.js#readme",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "pako": "^1.0.11"
+  },
+  "peerDependencies": {
+    "atob": "^2.1.2",
+    "ws": "^7.3.1",
+    "blob": "^0.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^11",
+    "@types/pako": "^1.0.1"
+  }
+}
