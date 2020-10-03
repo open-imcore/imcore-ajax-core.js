@@ -58,7 +58,7 @@ export class CoreHTTPClient extends StubHTTPClient {
         if (!axios) {
             this.axios = Axios.create({ baseURL });
 
-            new RatelimitResponseInterceptor(this.axios).register(this.axios);
+            new RatelimitResponseInterceptor(this.axios);
         } else {
             this.axios = axios;
         }

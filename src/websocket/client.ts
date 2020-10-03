@@ -8,6 +8,23 @@ export interface Event<T extends EventType> {
     data: Events[T];
 }
 
+export enum CommandType {
+    identify = "identify"
+}
+
+export interface Commands {
+    [CommandType.identify]: IdentifyPayload;
+}
+
+export interface IdentifyPayload {
+    token: string;
+}
+
+export interface StreamingCommand<T extends CommandType> {
+    type: T;
+    data: Commands[T];
+}
+
 export function isEvent(e: any): e is Event<EventType> {
     return typeof e === "object"
         && typeof e.type === "string"
@@ -24,7 +41,7 @@ export class IMWebSocketClient extends EventEmitter {
     private decoder = new TextDecoder("utf-8");
     public readonly reconnectInterval = 5000
 
-    constructor(public readonly url: string) {
+    constructor(public readonly url: string, public readonly token?: string | undefined) {
         super();
     }
 
@@ -60,6 +77,25 @@ export class IMWebSocketClient extends EventEmitter {
                     this.scheduleReconnect();
             }
         });
+
+        this.socket.addEventListener('open', () => {
+            if (this.token) {
+                this.send({
+                    type: CommandType.identify,
+                    data: {
+                        token: this.token
+                    }
+                })
+            }
+        });
+    }
+
+    private send<T extends CommandType>(command: StreamingCommand<T>) {
+        this.sendRaw(JSON.stringify(command));
+    }
+
+    private sendRaw(text: string) {
+        this.socket.send(text);
     }
 
     private scheduleReconnect() {

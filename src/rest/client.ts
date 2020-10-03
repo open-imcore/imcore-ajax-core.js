@@ -9,9 +9,25 @@ import {
 } from './endpoints';
 import { IMHandleClient } from "./handle-client";
 import { IMMessageClient } from "./message-client";
+import { IMSecurityClient } from "./security-client";
 import { CoreHTTPClient } from "./_client-core";
+import { TokenInterceptor } from "./token-interceptor";
+
+export interface IMHTTPClientOptions {
+    baseURL: string;
+    token?: string;
+}
 
 export class IMHTTPClient extends CoreHTTPClient {
+    public token: string | undefined;
+
+    public constructor(options: IMHTTPClientOptions = { baseURL: "http://127.0.0.1:8090" }) {
+        super(options.baseURL, undefined);
+        this.token = options.token;
+
+        new TokenInterceptor(this);
+    }
+
     /**
      * Resolves the URL of a resource with the given identifier
      * @param identifier identifier to resolve
@@ -47,4 +63,5 @@ export class IMHTTPClient extends CoreHTTPClient {
     public contacts = new IMContactClient(this);
     public messages = new IMMessageClient(this);
     public handles = new IMHandleClient(this);
+    public security = new IMSecurityClient(this);
 }

@@ -56,3 +56,10 @@ export const searchContacts = `${contacts}/search`
     export const bulkSearchAttachments = `${searchAttachments}/bulk`
     export const bulkSearchMessages = `${searchMessages}/bulk`
     export const bulkSearchContacts = `${searchContacts}/bulk`
+
+/** Security */
+export const security = `/security`
+export const securityAttachmentsSession = `${security}/attachment-session`
+export const securityToken = `${security}/token`
+export const securityBotToken = `${security}/bot-token`
+export const securityPSK = `${security}/psk`

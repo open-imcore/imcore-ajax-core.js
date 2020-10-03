@@ -1,10 +1,12 @@
-import axios, {  AxiosResponse, AxiosError, AxiosInstance } from "axios";
+import axios, {  AxiosResponse, AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
 axios.interceptors.request.use
 axios.interceptors.response.use()
 
 abstract class Interceptor<V> {
-    constructor(protected client: AxiosInstance) {}
+    constructor(protected client: AxiosInstance) {
+        this.client.interceptors[this instanceof ResponseInterceptor ? "response" : "request"].use((conf: any) => this.onFulfilled(conf) as any, (err) => this.onRejected(err))
+    }
 
     onFulfilled(value: V): V | Promise<V> {
         return value;
@@ -13,14 +15,10 @@ abstract class Interceptor<V> {
     onRejected(error: any): any {
         return error;
     }
-
-    register(axios: AxiosInstance) {
-        axios.interceptors[this instanceof ResponseInterceptor ? "response" : "request"].use((conf: any) => this.onFulfilled(conf) as any, (err) => this.onRejected(err))
-    }
 }
 
-class ResponseInterceptor extends Interceptor<AxiosResponse> {}
-// class RequestInterceptor extends Interceptor<AxiosRequestConfig> {}
+export class ResponseInterceptor extends Interceptor<AxiosResponse> {}
+export class RequestInterceptor extends Interceptor<AxiosRequestConfig> {}
 
 const RetryAfter = "Retry-After".toLowerCase()
 
