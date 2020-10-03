@@ -4,8 +4,15 @@ import { IMChatClient } from "./chat-client";
 import { IMContactClient } from "./contact-client";
 import { IMHandleClient } from "./handle-client";
 import { IMMessageClient } from "./message-client";
+import { IMSecurityClient } from "./security-client";
 import { CoreHTTPClient } from "./_client-core";
+export interface IMHTTPClientOptions {
+    baseURL: string;
+    token?: string;
+}
 export declare class IMHTTPClient extends CoreHTTPClient {
+    token: string | undefined;
+    constructor(options?: IMHTTPClientOptions);
     /**
      * Resolves the URL of a resource with the given identifier
      * @param identifier identifier to resolve
@@ -27,5 +34,6 @@ export declare class IMHTTPClient extends CoreHTTPClient {
     contacts: IMContactClient;
     messages: IMMessageClient;
     handles: IMHandleClient;
+    security: IMSecurityClient;
 }
 //# sourceMappingURL=client.d.ts.map

@@ -56,16 +56,22 @@ var contact_client_1 = require("./contact-client");
 var endpoints_1 = require("./endpoints");
 var handle_client_1 = require("./handle-client");
 var message_client_1 = require("./message-client");
+var security_client_1 = require("./security-client");
 var _client_core_1 = require("./_client-core");
+var token_interceptor_1 = require("./token-interceptor");
 var IMHTTPClient = /** @class */ (function (_super) {
     __extends(IMHTTPClient, _super);
-    function IMHTTPClient() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+    function IMHTTPClient(options) {
+        if (options === void 0) { options = { baseURL: "http://127.0.0.1:8090" }; }
+        var _this = _super.call(this, options.baseURL, undefined) || this;
         _this.chats = new chat_client_1.IMChatClient(_this);
         _this.attachments = new attachment_client_1.IMAttachmentClient(_this);
         _this.contacts = new contact_client_1.IMContactClient(_this);
         _this.messages = new message_client_1.IMMessageClient(_this);
         _this.handles = new handle_client_1.IMHandleClient(_this);
+        _this.security = new security_client_1.IMSecurityClient(_this);
+        _this.token = options.token;
+        new token_interceptor_1.TokenInterceptor(_this);
         return _this;
     }
     /**

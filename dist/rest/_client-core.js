@@ -128,7 +128,7 @@ var CoreHTTPClient = /** @class */ (function (_super) {
         _this.baseURL = baseURL;
         if (!axios) {
             _this.axios = axios_1.default.create({ baseURL: baseURL });
-            new ratelimit_1.RatelimitResponseInterceptor(_this.axios).register(_this.axios);
+            new ratelimit_1.RatelimitResponseInterceptor(_this.axios);
         }
         else {
             _this.axios = axios;

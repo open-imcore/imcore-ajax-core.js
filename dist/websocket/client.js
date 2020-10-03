@@ -16,10 +16,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.IMWebSocketClient = exports.isEvent = void 0;
+exports.IMWebSocketClient = exports.isEvent = exports.CommandType = void 0;
 var web_socket_polyfill_1 = require("./web-socket-polyfill");
 var pako_1 = __importDefault(require("pako"));
 var events_1 = require("events");
+var CommandType;
+(function (CommandType) {
+    CommandType["identify"] = "identify";
+})(CommandType = exports.CommandType || (exports.CommandType = {}));
 function isEvent(e) {
     return typeof e === "object"
         && typeof e.type === "string"
@@ -28,9 +32,10 @@ function isEvent(e) {
 exports.isEvent = isEvent;
 var IMWebSocketClient = /** @class */ (function (_super) {
     __extends(IMWebSocketClient, _super);
-    function IMWebSocketClient(url) {
+    function IMWebSocketClient(url, token) {
         var _this = _super.call(this) || this;
         _this.url = url;
+        _this.token = token;
         _this.decoder = new web_socket_polyfill_1.TextDecoder("utf-8");
         _this.reconnectInterval = 5000;
         return _this;
@@ -59,6 +64,22 @@ var IMWebSocketClient = /** @class */ (function (_super) {
                     _this.scheduleReconnect();
             }
         });
+        this.socket.addEventListener('open', function () {
+            if (_this.token) {
+                _this.send({
+                    type: CommandType.identify,
+                    data: {
+                        token: _this.token
+                    }
+                });
+            }
+        });
+    };
+    IMWebSocketClient.prototype.send = function (command) {
+        this.sendRaw(JSON.stringify(command));
+    };
+    IMWebSocketClient.prototype.sendRaw = function (text) {
+        this.socket.send(text);
     };
     IMWebSocketClient.prototype.scheduleReconnect = function () {
         var _this = this;

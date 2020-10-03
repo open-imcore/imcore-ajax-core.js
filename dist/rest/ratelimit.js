@@ -16,23 +16,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RatelimitResponseInterceptor = void 0;
+exports.RatelimitResponseInterceptor = exports.RequestInterceptor = exports.ResponseInterceptor = void 0;
 var axios_1 = __importDefault(require("axios"));
 axios_1.default.interceptors.request.use;
 axios_1.default.interceptors.response.use();
 var Interceptor = /** @class */ (function () {
     function Interceptor(client) {
+        var _this = this;
         this.client = client;
+        this.client.interceptors[this instanceof ResponseInterceptor ? "response" : "request"].use(function (conf) { return _this.onFulfilled(conf); }, function (err) { return _this.onRejected(err); });
     }
     Interceptor.prototype.onFulfilled = function (value) {
         return value;
     };
     Interceptor.prototype.onRejected = function (error) {
         return error;
-    };
-    Interceptor.prototype.register = function (axios) {
-        var _this = this;
-        axios.interceptors[this instanceof ResponseInterceptor ? "response" : "request"].use(function (conf) { return _this.onFulfilled(conf); }, function (err) { return _this.onRejected(err); });
     };
     return Interceptor;
 }());
@@ -43,7 +41,15 @@ var ResponseInterceptor = /** @class */ (function (_super) {
     }
     return ResponseInterceptor;
 }(Interceptor));
-// class RequestInterceptor extends Interceptor<AxiosRequestConfig> {}
+exports.ResponseInterceptor = ResponseInterceptor;
+var RequestInterceptor = /** @class */ (function (_super) {
+    __extends(RequestInterceptor, _super);
+    function RequestInterceptor() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return RequestInterceptor;
+}(Interceptor));
+exports.RequestInterceptor = RequestInterceptor;
 var RetryAfter = "Retry-After".toLowerCase();
 var RatelimitResponseInterceptor = /** @class */ (function (_super) {
     __extends(RatelimitResponseInterceptor, _super);

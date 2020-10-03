@@ -43,4 +43,10 @@ export declare const bulkSearchChats: string;
 export declare const bulkSearchAttachments: string;
 export declare const bulkSearchMessages: string;
 export declare const bulkSearchContacts: string;
+/** Security */
+export declare const security = "/security";
+export declare const securityAttachmentsSession: string;
+export declare const securityToken: string;
+export declare const securityBotToken: string;
+export declare const securityPSK: string;
 //# sourceMappingURL=endpoints.d.ts.map
