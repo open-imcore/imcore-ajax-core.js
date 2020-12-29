@@ -25,10 +25,15 @@ const RetryAfter = "Retry-After".toLowerCase()
 export class RatelimitResponseInterceptor extends ResponseInterceptor {
     onRejected(error: AxiosError) {
         let response: AxiosResponse, retryAfter: number;
+
         if ((response = error.response!) && (response.status === 429) && (retryAfter = +response.headers[RetryAfter]) && !isNaN(retryAfter)) {
+            console.log("we send.");
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
-                    return this.client.request(error.config).then(resolve).catch(reject)
+                    return this.client.request(error.config).then(resolve).catch(e => {
+                        console.log("we flop.");
+                        throw e;
+                    });
                 }, (retryAfter * 1000) + 1000);
             })
         }

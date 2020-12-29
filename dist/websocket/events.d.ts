@@ -1,4 +1,4 @@
-import { ChatIDRepresentation, ChatRepresentation, ContactRepresentation, ContactIDRepresentation, BulkHandleIDRepresentation, BulkMessageIDRepresentation, BulkChatItemRepresentation, BulkContactRepresentation, StatusChatItemRepresentation, ChatConfigurationRepresentation } from '../types';
+import { ChatIDRepresentation, ChatRepresentation, ContactRepresentation, ContactIDRepresentation, BulkHandleIDRepresentation, BulkMessageIDRepresentation, BulkChatItemRepresentation, BulkContactRepresentation, StatusChatItemRepresentation, ChatConfigurationRepresentation, MessageRepresentation } from '../types';
 export declare enum EventType {
     bootstrap = "bootstrap",
     itemsReceived = "itemsReceived",
@@ -21,7 +21,7 @@ export declare enum EventType {
 export interface BootstrapEvent {
     chats: ChatRepresentation[];
     contacts: BulkContactRepresentation;
-    messages?: BulkChatItemRepresentation;
+    messages?: MessageRepresentation[];
 }
 export declare type ItemsReceivedEvent = BulkChatItemRepresentation;
 export declare type ItemsUpdatedEvent = BulkChatItemRepresentation;

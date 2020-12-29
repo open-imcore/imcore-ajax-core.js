@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.securityPSK = exports.securityBotToken = exports.securityToken = exports.securityAttachmentsSession = exports.security = exports.bulkSearchContacts = exports.bulkSearchMessages = exports.bulkSearchAttachments = exports.bulkSearchChats = exports.searchContacts = exports.searchMessages = exports.searchAttachments = exports.searchChats = exports.contactPhoto = exports.contact = exports.contacts = exports.handleBlock = exports.handleBlocks = exports.handles = exports.bulkChatPluginMessage = exports.bulkChatMessage = exports.chatPluginMessage = exports.chatMessages = exports.chatParticipants = exports.chatName = exports.chatProperties = exports.chatJoin = exports.chatRead = exports.chatTyping = exports.chat = exports.chats = exports.message = exports.associatedMessages = exports.messages = exports.attachment = exports.attachments = exports.resource = void 0;
+exports.securityPSK = exports.securityBotToken = exports.securityToken = exports.securityAttachmentsSession = exports.security = exports.bulkSearchContacts = exports.bulkSearchMessages = exports.bulkSearchAttachments = exports.bulkSearchChats = exports.searchContacts = exports.searchMessages = exports.searchAttachments = exports.searchChats = exports.contactPhoto = exports.contact = exports.contacts = exports.handleBlock = exports.handleBlocks = exports.handleIDS = exports.handles = exports.bulkChatPluginMessage = exports.bulkChatMessage = exports.chatPluginMessage = exports.chatMessages = exports.chatParticipants = exports.chatName = exports.chatProperties = exports.chatJoin = exports.chatRead = exports.chatTyping = exports.chat = exports.chats = exports.message = exports.associatedMessages = exports.messages = exports.attachment = exports.attachments = exports.resource = void 0;
 exports.resource = function (identifier) { return "/resources/" + identifier; };
 /** Attachments */
 exports.attachments = "/attachments";
@@ -30,6 +30,9 @@ exports.bulkChatMessage = exports.chats + "/bulk/message";
 exports.bulkChatPluginMessage = exports.chats + "/bulk/plugin";
 /** Handles */
 exports.handles = "/handles";
+/** IDS */
+exports.handleIDS = exports.handles + "/ids";
+/** Blocklist */
 exports.handleBlocks = exports.handles + "/blocked";
 exports.handleBlock = function (handleID) { return exports.handleBlocks + "/" + handleID; };
 /** Contacts */

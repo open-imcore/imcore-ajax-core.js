@@ -7,7 +7,7 @@ import {
   BulkMessageIDRepresentation,
   BulkChatItemRepresentation,
   BulkContactRepresentation,
-  StatusChatItemRepresentation, ChatConfigurationRepresentation,
+  StatusChatItemRepresentation, ChatConfigurationRepresentation, MessageRepresentation
 } from '../types';
 
 export enum EventType {
@@ -33,7 +33,7 @@ export enum EventType {
 export interface BootstrapEvent {
     chats: ChatRepresentation[];
     contacts: BulkContactRepresentation;
-    messages?: BulkChatItemRepresentation;
+    messages?: MessageRepresentation[];
 }
 
 export type ItemsReceivedEvent = BulkChatItemRepresentation;

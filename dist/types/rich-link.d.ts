@@ -44,6 +44,7 @@ export interface RichLinkImage extends RichLinkAsset {
 export interface RichLinkVideo extends RichLinkAsset {
     hasAudio?: boolean;
     youTubeURL?: string;
+    streamingURL?: string;
 }
 export interface RichLinkAudio extends RichLinkStreamableAsset {
 }

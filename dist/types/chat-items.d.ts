@@ -12,6 +12,8 @@ export interface ChatItemRepresentation {
     chatID: string;
     fromMe: boolean;
     time: number;
+    threadIdentifier?: string;
+    threadOriginator?: string;
 }
 export interface AssociatedChatItemRepresentation extends ChatItemRepresentation {
     associatedID: string;
@@ -50,10 +52,41 @@ export declare enum TextPartType {
     calendar = "calendar",
     text = "text"
 }
+export declare enum TextPartAttributeType {
+    bold = "bold",
+    italic = "italic",
+    underline = "underline",
+    strike = "strike",
+    writingDirection = "writingDirection",
+    link = "link",
+    breadcrumbMarker = "breadcrumbMarker",
+    breadcrumbOptions = "breadcrumbOptions",
+    mention = "mention"
+}
+export interface TextPartAttributeMapping {
+    [TextPartAttributeType.bold]: number;
+    [TextPartAttributeType.italic]: number;
+    [TextPartAttributeType.underline]: number;
+    [TextPartAttributeType.strike]: number;
+    [TextPartAttributeType.writingDirection]: number;
+    [TextPartAttributeType.link]: string;
+    [TextPartAttributeType.breadcrumbMarker]: string;
+    [TextPartAttributeType.breadcrumbOptions]: number;
+    [TextPartAttributeType.mention]: string;
+}
+export declare type TextPartAttribute<T extends TextPartAttributeType> = {
+    key: T;
+    value: TextPartAttributeMapping[T];
+};
+declare type TextPartLedger = {
+    [K in TextPartAttributeType]: TextPartAttribute<K>;
+};
+export declare type AnyTextPartAttribute = TextPartLedger[keyof TextPartLedger];
 export interface TextPart {
     type: TextPartType;
     string: string;
     data?: any;
+    attributes?: AnyTextPartAttribute[];
 }
 export interface TextChatItemRepresentation extends ChatItemAcknowledgableRepresentation {
     text: string;
@@ -65,7 +98,7 @@ export interface ChatItemAcknowledgableRepresentation extends ChatItemRepresenta
 export declare enum AcknowledgmentType {
     heart = 2000,
     thumbsup = 2001,
-    thumsdown = 2002,
+    thumbsdown = 2002,
     ha = 2003,
     exclamation = 2004,
     questionmark = 2005,
@@ -162,4 +195,5 @@ export interface ChatItem<T extends ChatItemType> {
     payload: ChatItems[T];
 }
 export declare type AnyChatItemModel = ChatItem<ChatItemType.sticker> | ChatItem<ChatItemType.typing> | ChatItem<ChatItemType.date> | ChatItem<ChatItemType.sender> | ChatItem<ChatItemType.participantChange> | ChatItem<ChatItemType.attachment> | ChatItem<ChatItemType.status> | ChatItem<ChatItemType.groupAction> | ChatItem<ChatItemType.plugin> | ChatItem<ChatItemType.text> | ChatItem<ChatItemType.acknowledgment> | ChatItem<ChatItemType.associated> | ChatItem<ChatItemType.message> | ChatItem<ChatItemType.phantom> | ChatItem<ChatItemType.groupTitle>;
+export {};
 //# sourceMappingURL=chat-items.d.ts.map

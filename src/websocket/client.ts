@@ -36,19 +36,36 @@ export declare interface IMWebSocketClient {
     on(event: string, listener: Function): this;
 }
 
+export interface IMWebSocketConnectionOptions {
+    preload?: string;
+    chatLimit?: number;
+}
+
 export class IMWebSocketClient extends EventEmitter {
     private socket: WebSocket;
     private decoder = new TextDecoder("utf-8");
     public readonly reconnectInterval = 5000
+    public delegates: Record<string, EventEmitter> = {};
+
+    private killed = false;
+    private open = false;
 
     constructor(public readonly url: string, public readonly token?: string | undefined) {
         super();
     }
 
-    connect(preload?: string) {
+    connect({ preload, chatLimit }: IMWebSocketConnectionOptions = {}) {
         const compiled = new URL(this.url);
+
+        this.killed = false;
+        this.open = true;
+
         if (preload) {
-          compiled.searchParams.set("chatPreload", preload);
+            compiled.searchParams.set("chatPreload", preload);
+        }
+
+        if (chatLimit) {
+            compiled.searchParams.set("chatLimit", chatLimit.toFixed(0));
         }
 
         this.socket = new WebSocket(compiled.toString());
@@ -70,7 +87,12 @@ export class IMWebSocketClient extends EventEmitter {
         });
 
         this.socket.addEventListener('close', event => {
-            this.emit('debug', { level: 'log', message: ['Socket closed with event', event] })
+            this.emit('debug', { level: 'log', message: ['Socket closed with event', event] });
+            this.emit("close");
+
+            this.open = false;
+
+            if (this.killed) return;
 
             switch (event.code) {
                 default:
@@ -88,6 +110,25 @@ export class IMWebSocketClient extends EventEmitter {
                 })
             }
         });
+    }
+
+    async close() {
+        if (!this.open) return;
+        
+        this.killed = true;
+        const pending = new Promise(resolve => this.once("close", resolve));
+
+        this.socket.close();
+        
+        await pending;
+    }
+
+    emit(name: string, ...args: any[]) {
+        for (const delegate in this.delegates) {
+            this.delegates[delegate].emit(name, ...args);
+        }
+
+        return super.emit(name, ...args);
     }
 
     private send<T extends CommandType>(command: StreamingCommand<T>) {

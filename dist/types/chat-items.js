@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResourceMode = exports.AcknowledgmentType = exports.TextPartType = void 0;
+exports.ResourceMode = exports.AcknowledgmentType = exports.TextPartAttributeType = exports.TextPartType = void 0;
 var Constants_1 = require("../Constants");
 var TextPartType;
 (function (TextPartType) {
@@ -8,11 +8,23 @@ var TextPartType;
     TextPartType["calendar"] = "calendar";
     TextPartType["text"] = "text";
 })(TextPartType = exports.TextPartType || (exports.TextPartType = {}));
+var TextPartAttributeType;
+(function (TextPartAttributeType) {
+    TextPartAttributeType["bold"] = "bold";
+    TextPartAttributeType["italic"] = "italic";
+    TextPartAttributeType["underline"] = "underline";
+    TextPartAttributeType["strike"] = "strike";
+    TextPartAttributeType["writingDirection"] = "writingDirection";
+    TextPartAttributeType["link"] = "link";
+    TextPartAttributeType["breadcrumbMarker"] = "breadcrumbMarker";
+    TextPartAttributeType["breadcrumbOptions"] = "breadcrumbOptions";
+    TextPartAttributeType["mention"] = "mention";
+})(TextPartAttributeType = exports.TextPartAttributeType || (exports.TextPartAttributeType = {}));
 var AcknowledgmentType;
 (function (AcknowledgmentType) {
     AcknowledgmentType[AcknowledgmentType["heart"] = 2000] = "heart";
     AcknowledgmentType[AcknowledgmentType["thumbsup"] = 2001] = "thumbsup";
-    AcknowledgmentType[AcknowledgmentType["thumsdown"] = 2002] = "thumsdown";
+    AcknowledgmentType[AcknowledgmentType["thumbsdown"] = 2002] = "thumbsdown";
     AcknowledgmentType[AcknowledgmentType["ha"] = 2003] = "ha";
     AcknowledgmentType[AcknowledgmentType["exclamation"] = 2004] = "exclamation";
     AcknowledgmentType[AcknowledgmentType["questionmark"] = 2005] = "questionmark";

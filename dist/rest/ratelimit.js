@@ -60,9 +60,13 @@ var RatelimitResponseInterceptor = /** @class */ (function (_super) {
         var _this = this;
         var response, retryAfter;
         if ((response = error.response) && (response.status === 429) && (retryAfter = +response.headers[RetryAfter]) && !isNaN(retryAfter)) {
+            console.log("we send.");
             return new Promise(function (resolve, reject) {
                 setTimeout(function () {
-                    return _this.client.request(error.config).then(resolve).catch(reject);
+                    return _this.client.request(error.config).then(resolve).catch(function (e) {
+                        console.log("we flop.");
+                        throw e;
+                    });
                 }, (retryAfter * 1000) + 1000);
             });
         }

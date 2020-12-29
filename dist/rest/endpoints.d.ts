@@ -27,6 +27,9 @@ export declare const bulkChatMessage: string;
 export declare const bulkChatPluginMessage: string;
 /** Handles */
 export declare const handles = "/handles";
+/** IDS */
+export declare const handleIDS: string;
+/** Blocklist */
 export declare const handleBlocks: string;
 export declare const handleBlock: (handleID: string) => string;
 /** Contacts */

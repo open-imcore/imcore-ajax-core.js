@@ -23,10 +23,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./types"), exports);
-var client_1 = require("./rest/client");
-Object.defineProperty(exports, "IMHTTPClient", { enumerable: true, get: function () { return client_1.IMHTTPClient; } });
-var client_2 = require("./websocket/client");
-Object.defineProperty(exports, "IMWebSocketClient", { enumerable: true, get: function () { return client_2.IMWebSocketClient; } });
+__exportStar(require("./rest/client"), exports);
+__exportStar(require("./websocket/client"), exports);
 __exportStar(require("./websocket/events"), exports);
+__exportStar(require("./rest/message-client"), exports);
+__exportStar(require("./rest/chat-client"), exports);
+__exportStar(require("./rest/contact-client"), exports);
+__exportStar(require("./rest/security-client"), exports);
+__exportStar(require("./rest/handle-client"), exports);
 exports.Endpoints = __importStar(require("./rest/endpoints"));
+__exportStar(require("./Constants"), exports);
 //# sourceMappingURL=index.js.map

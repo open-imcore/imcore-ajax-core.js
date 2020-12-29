@@ -1,5 +1,7 @@
+import { IDSStatus } from "../types";
 import { ReliantHTTPClient } from "./_client-core";
 export declare class IMHandleClient extends ReliantHTTPClient {
+    queryIDSForHandles(handles: string[]): Promise<Record<string, IDSStatus[]>>;
     /**
      * Removes a handle ID from the blocklist, returning the updated blocklist
      * @param handle handle ID to unblock

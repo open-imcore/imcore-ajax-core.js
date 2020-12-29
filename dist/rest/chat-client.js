@@ -203,7 +203,7 @@ var IMChatClient = /** @class */ (function (_super) {
                             }
                         })];
                     case 1:
-                        chatRepresentations = (_a.sent()).data.chatRepresentations;
+                        chatRepresentations = (_a.sent()).data.chats;
                         return [2 /*return*/, chatRepresentations];
                 }
             });

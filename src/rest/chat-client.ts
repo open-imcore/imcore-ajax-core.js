@@ -1,4 +1,4 @@
-import { ChatConfigurationRepresentation, ChatPropertyListRepresentation, ChatRepresentation, MessageRepresentation, MessagesExtension } from "../types";
+import { AnyTextPartAttribute, ChatConfigurationRepresentation, ChatPropertyListRepresentation, ChatRepresentation, MessageRepresentation, MessagesExtension } from "../types";
 import { ChatSearchParameters } from "../types/search";
 import { bulkSearchChats, chat, chatJoin, chatMessages, chatName, chatParticipants, chatPluginMessage, chatProperties, chatRead, chats, chatTyping, searchChats } from "./endpoints";
 import { ReliantHTTPClient, SearchClient } from "./_client-core";
@@ -6,9 +6,15 @@ import { ReliantHTTPClient, SearchClient } from "./_client-core";
 export interface MessagePartOptions {
     type: "text" | "attachment";
     details: string;
+    attributes?: AnyTextPartAttribute[];
 }
 
-export interface MessageOptions {
+export interface MessageOptionsThreadAttachable {
+    threadIdentifier?: string;
+    replyToPart?: string;
+}
+
+export interface MessageOptions extends MessageOptionsThreadAttachable {
     subject?: string;
     parts: MessagePartOptions[];
     isAudioMessage?: boolean;
@@ -18,11 +24,11 @@ export interface MessageOptions {
     expressiveSendStyleID?: string;
 }
 
-export interface PluginMessageOptions {
+export interface PluginMessageOptions extends MessageOptionsThreadAttachable {
     extensionData: MessagesExtension;
     attachmentID?: string;
     bundleID: string;
-    expressiveSendStyleID: string;
+    expressiveSendStyleID?: string;
 }
 
 export interface ChatCreationOptions {
@@ -67,7 +73,7 @@ export class IMChatClient extends ReliantHTTPClient {
 
                             const mime = part.details.substring("data:".length, part.details.indexOf(";base64"));
                             const byteCharacters = atob!(part.details.substring(part.details.indexOf(",") + 1));
-                            const byteArrays = [];
+                            const byteArrays: Uint8Array[] = [];
 
                             for (let offset = 0; offset < byteCharacters.length; offset += 512) {
                                 const slice = byteCharacters.slice(offset, offset + 512);
@@ -124,7 +130,7 @@ export class IMChatClient extends ReliantHTTPClient {
      * @param limit max number of chats to retrieve
      */
     public async fetchAll(limit?: number): Promise<ChatRepresentation[]> {
-        const { data: { chatRepresentations } } = await this.get(chats, {
+        const { data: { chats: chatRepresentations } } = await this.get(chats, {
             params: {
                 limit
             }

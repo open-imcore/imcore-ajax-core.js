@@ -57,6 +57,26 @@ var IMHandleClient = /** @class */ (function (_super) {
     function IMHandleClient() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    IMHandleClient.prototype.queryIDSForHandles = function (handles) {
+        return __awaiter(this, void 0, void 0, function () {
+            var statuses;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.get(endpoints_1.handleIDS, {
+                            params: {
+                                handles: handles
+                            }
+                        }).then(function (r) { return r.data; })];
+                    case 1:
+                        statuses = (_a.sent()).statuses;
+                        return [2 /*return*/, statuses.reduce(function (acc, _a) {
+                                var handle = _a.handle, services = _a.services;
+                                return (acc[handle] = services, acc);
+                            }, {})];
+                }
+            });
+        });
+    };
     /**
      * Removes a handle ID from the blocklist, returning the updated blocklist
      * @param handle handle ID to unblock

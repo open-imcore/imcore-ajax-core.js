@@ -23,14 +23,23 @@ export declare interface IMWebSocketClient {
     on<T extends EventType>(event: T, listener: (data: Events[T]) => void): this;
     on(event: string, listener: Function): this;
 }
+export interface IMWebSocketConnectionOptions {
+    preload?: string;
+    chatLimit?: number;
+}
 export declare class IMWebSocketClient extends EventEmitter {
     readonly url: string;
     readonly token?: string | undefined;
     private socket;
     private decoder;
     readonly reconnectInterval = 5000;
+    delegates: Record<string, EventEmitter>;
+    private killed;
+    private open;
     constructor(url: string, token?: string | undefined);
-    connect(preload?: string): void;
+    connect({ preload, chatLimit }?: IMWebSocketConnectionOptions): void;
+    close(): Promise<void>;
+    emit(name: string, ...args: any[]): boolean;
     private send;
     private sendRaw;
     private scheduleReconnect;

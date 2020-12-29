@@ -37,8 +37,12 @@ export const chat = (chatID: string) => `${chats}/${chatID}`
 
 /** Handles */
 export const handles = "/handles"
-export const handleBlocks = `${handles}/blocked`
-export const handleBlock = (handleID: string) => `${handleBlocks}/${handleID}`
+    /** IDS */
+    export const handleIDS = `${handles}/ids`
+
+    /** Blocklist */
+    export const handleBlocks = `${handles}/blocked`
+    export const handleBlock = (handleID: string) => `${handleBlocks}/${handleID}`
 
 /** Contacts */
 export const contacts = "/contacts"

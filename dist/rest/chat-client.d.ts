@@ -1,11 +1,16 @@
-import { ChatConfigurationRepresentation, ChatPropertyListRepresentation, ChatRepresentation, MessageRepresentation, MessagesExtension } from "../types";
+import { AnyTextPartAttribute, ChatConfigurationRepresentation, ChatPropertyListRepresentation, ChatRepresentation, MessageRepresentation, MessagesExtension } from "../types";
 import { ChatSearchParameters } from "../types/search";
 import { ReliantHTTPClient, SearchClient } from "./_client-core";
 export interface MessagePartOptions {
     type: "text" | "attachment";
     details: string;
+    attributes?: AnyTextPartAttribute[];
 }
-export interface MessageOptions {
+export interface MessageOptionsThreadAttachable {
+    threadIdentifier?: string;
+    replyToPart?: string;
+}
+export interface MessageOptions extends MessageOptionsThreadAttachable {
     subject?: string;
     parts: MessagePartOptions[];
     isAudioMessage?: boolean;
@@ -14,11 +19,11 @@ export interface MessageOptions {
     payloadData?: string;
     expressiveSendStyleID?: string;
 }
-export interface PluginMessageOptions {
+export interface PluginMessageOptions extends MessageOptionsThreadAttachable {
     extensionData: MessagesExtension;
     attachmentID?: string;
     bundleID: string;
-    expressiveSendStyleID: string;
+    expressiveSendStyleID?: string;
 }
 export interface ChatCreationOptions {
     participants: string[];

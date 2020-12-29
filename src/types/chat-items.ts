@@ -14,6 +14,8 @@ export interface ChatItemRepresentation {
     chatID: string;
     fromMe: boolean;
     time: number;
+    threadIdentifier?: string;
+    threadOriginator?: string;
 }
 
 export interface AssociatedChatItemRepresentation extends ChatItemRepresentation {
@@ -61,10 +63,46 @@ export enum TextPartType {
   text = "text"
 }
 
+export enum TextPartAttributeType {
+    bold = "bold",
+    italic = "italic",
+    underline = "underline",
+    strike = "strike",
+    writingDirection = "writingDirection",
+    link = "link",
+    breadcrumbMarker = "breadcrumbMarker",
+    breadcrumbOptions = "breadcrumbOptions",
+    mention = "mention"
+}
+
+export interface TextPartAttributeMapping {
+    [TextPartAttributeType.bold]: number;
+    [TextPartAttributeType.italic]: number;
+    [TextPartAttributeType.underline]: number;
+    [TextPartAttributeType.strike]: number;
+    [TextPartAttributeType.writingDirection]: number;
+    [TextPartAttributeType.link]: string;
+    [TextPartAttributeType.breadcrumbMarker]: string;
+    [TextPartAttributeType.breadcrumbOptions]: number;
+    [TextPartAttributeType.mention]: string;
+}
+
+export type TextPartAttribute<T extends TextPartAttributeType> = {
+    key: T;
+    value: TextPartAttributeMapping[T];
+}
+
+type TextPartLedger = {
+    [K in TextPartAttributeType]: TextPartAttribute<K>
+}
+
+export type AnyTextPartAttribute = TextPartLedger[keyof TextPartLedger];
+
 export interface TextPart {
   type: TextPartType;
   string: string;
   data?: any;
+  attributes?: AnyTextPartAttribute[];
 }
 
 export interface TextChatItemRepresentation extends ChatItemAcknowledgableRepresentation {
@@ -79,7 +117,7 @@ export interface ChatItemAcknowledgableRepresentation extends ChatItemRepresenta
 export enum AcknowledgmentType {
     heart = 2000,
     thumbsup = 2001,
-    thumsdown = 2002,
+    thumbsdown = 2002,
     ha = 2003,
     exclamation = 2004,
     questionmark = 2005,
