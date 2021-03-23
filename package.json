@@ -1,17 +1,15 @@
 {
   "name": "imcore-ajax-core",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/open-imcore/imcore-ajax-core.js.git"
   },
   "author": "Eric Rabil <ericjrabil@gmail.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/open-imcore/imcore-ajax-core.js/issues"
   },
