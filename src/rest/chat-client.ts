@@ -86,7 +86,7 @@ export class IMChatClient extends ReliantHTTPClient {
                                 byteArrays.push(new Uint8Array(byteNumbers));
                             }
 
-                            part.details = await this.client.attachments.create(new Blob(byteArrays, { type: mime }), mime).then(({ id }) => id);
+                            part.details = await this.client.attachments.create(new Blob(byteArrays, { type: mime }), { mime }).then(({ id }) => id);
 
                             return part;
                         case "http":
