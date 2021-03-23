@@ -1,6 +1,6 @@
 {
   "name": "imcore-ajax-core",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
   },
   "peerDependencies": {
     "atob": "^2.1.2",
-    "ws": "^7.3.1",
-    "blob": "^0.1.0"
+    "blob": "^0.1.0",
+    "ws": "^7.3.1"
   },
   "devDependencies": {
     "@types/node": "^11",
