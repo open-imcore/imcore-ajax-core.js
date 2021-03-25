@@ -25,6 +25,7 @@ export interface ChatRepresentation extends ChatConfigurationRepresentation {
     lastMessage?: string;
     lastMessageTime: number;
     style: number;
+    groupPhotoID?: string | null;
 }
 
 export interface ChatIDRepresentation {
