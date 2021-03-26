@@ -3,6 +3,7 @@ import { IMService } from "../Constants";
 export interface ChatPropertyListRepresentation {
     readReceipts: boolean;
     ignoreAlerts: boolean;
+    groupPhotoID?: string | null;
 }
 
 export interface ChatConfigurationRepresentation extends ChatPropertyListRepresentation {
@@ -25,7 +26,6 @@ export interface ChatRepresentation extends ChatConfigurationRepresentation {
     lastMessage?: string;
     lastMessageTime: number;
     style: number;
-    groupPhotoID?: string | null;
 }
 
 export interface ChatIDRepresentation {

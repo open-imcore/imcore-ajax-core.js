@@ -108,6 +108,7 @@ export interface TextPart {
 export interface TextChatItemRepresentation extends ChatItemAcknowledgableRepresentation {
     text: string;
     parts: TextPart[];
+    subject?: string | null;
 }
 
 export interface ChatItemAcknowledgableRepresentation extends ChatItemRepresentation {
