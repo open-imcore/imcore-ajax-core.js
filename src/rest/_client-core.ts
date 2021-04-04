@@ -3,7 +3,7 @@ import { BulkSearchRequest, BulkSearchResult, SearchParameters, SearchResult } f
 import { IMHTTPClient } from "./client";
 import { RatelimitResponseInterceptor } from "./ratelimit";
 
-Axios.prototype.delete = function (url: any, data: any, config: any) {
+const deleteFn = Axios.prototype.delete = function (this: AxiosInstance, url: any, data: any, config: any) {
     return this.request(Object.assign({}, config || {}, {
         method: "delete",
         url: url,
@@ -52,8 +52,10 @@ export class ReliantHTTPClient extends StubHTTPClient {
 }
 
 export class CoreHTTPClient extends StubHTTPClient {
-    constructor(public readonly baseURL: string, axios: AxiosInstance | undefined) {
+    constructor(baseURL: string, axios: AxiosInstance | undefined) {
         super();
+
+        this.#baseURL = baseURL;
 
         if (!axios) {
             this.axios = Axios.create({ baseURL });
@@ -62,6 +64,18 @@ export class CoreHTTPClient extends StubHTTPClient {
         } else {
             this.axios = axios;
         }
+
+        this.axios.delete = deleteFn.bind(this.axios) as any;
+    }
+
+    #baseURL: string;
+
+    get baseURL(): string {
+        return this.#baseURL;
+    }
+
+    set baseURL(url: string) {
+        this.axios.defaults.baseURL = this.#baseURL = url;
     }
 }
 

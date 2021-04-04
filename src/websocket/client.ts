@@ -34,6 +34,9 @@ export function isEvent(e: any): e is Event<EventType> {
 export declare interface IMWebSocketClient {
     on<T extends EventType>(event: T, listener: (data: Events[T]) => void): this;
     on(event: string, listener: Function): this;
+
+    once<T extends EventType>(event: T, listener: (data: Events[T]) => void): this;
+    once(event: string, listener: Function): this;
 }
 
 export interface IMWebSocketConnectionOptions {
@@ -48,17 +51,19 @@ export class IMWebSocketClient extends EventEmitter {
     public delegates: Record<string, EventEmitter> = {};
 
     private killed = false;
-    private open = false;
 
-    constructor(public readonly url: string, public readonly token?: string | undefined) {
+    constructor(public url: string, public readonly token?: string | undefined) {
         super();
     }
 
-    connect({ preload, chatLimit }: IMWebSocketConnectionOptions = {}) {
+    async connect({ preload, chatLimit }: IMWebSocketConnectionOptions = {}) {
+        if (this.open || this.connecting) {
+            await this.close();
+        }
+
         const compiled = new URL(this.url);
 
         this.killed = false;
-        this.open = true;
 
         if (preload) {
             compiled.searchParams.set("chatPreload", preload);
@@ -90,8 +95,6 @@ export class IMWebSocketClient extends EventEmitter {
             this.emit('debug', { level: 'log', message: ['Socket closed with event', event] });
             this.emit("close");
 
-            this.open = false;
-
             if (this.killed) return;
 
             switch (event.code) {
@@ -110,6 +113,8 @@ export class IMWebSocketClient extends EventEmitter {
                 })
             }
         });
+
+        await new Promise(resolve => this.once(EventType.bootstrap, resolve));
     }
 
     async close() {
@@ -129,6 +134,14 @@ export class IMWebSocketClient extends EventEmitter {
         }
 
         return super.emit(name, ...args);
+    }
+
+    public get open(): boolean {
+        return this.socket && this.socket.readyState === this.socket.OPEN;
+    }
+
+    public get connecting(): boolean {
+        return this.socket && this.socket.readyState === this.socket.CONNECTING;
     }
 
     private send<T extends CommandType>(command: StreamingCommand<T>) {

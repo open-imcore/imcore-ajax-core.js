@@ -55,6 +55,7 @@ export interface PluginChatItemRepresentation extends ChatItemAcknowledgableRepr
     payload?: string;
     bundleID: string;
     attachments: AttachmentRepresentation[];
+    fallback?: AnyChatItemModel;
 }
 
 export enum TextPartType {
