@@ -8,3 +8,4 @@ export * from "./message-extension";
 export * from "./message";
 export * from "./rich-link";
 export * from "./search";
+export * from "./trace";

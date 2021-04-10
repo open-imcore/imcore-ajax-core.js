@@ -2,6 +2,7 @@ import { WebSocket, TextDecoder } from "./web-socket-polyfill";
 import pako from "pako";
 import { Events, EventType } from "./events";
 import { EventEmitter } from "events";
+import { TraceType, WSTraceData } from "../types";
 
 export interface Event<T extends EventType> {
     type: T;
@@ -52,7 +53,7 @@ export class IMWebSocketClient extends EventEmitter {
 
     private killed = false;
 
-    constructor(public url: string, public readonly token?: string | undefined) {
+    constructor(public url: string, public token?: string | undefined) {
         super();
     }
 
@@ -145,6 +146,14 @@ export class IMWebSocketClient extends EventEmitter {
     }
 
     private send<T extends CommandType>(command: StreamingCommand<T>) {
+        this.emit("trace", {
+            type: TraceType.ws,
+            timestamp: Date.now(),
+            payload: command as unknown as Event<EventType>,
+            fromServer: false,
+            fromMe: true
+        } as WSTraceData);
+
         this.sendRaw(JSON.stringify(command));
     }
 
@@ -167,6 +176,14 @@ export class IMWebSocketClient extends EventEmitter {
         if (!isEvent(payload)) {
             return
         }
+
+        this.emit("trace", {
+            type: TraceType.ws,
+            timestamp: Date.now(),
+            payload,
+            fromServer: true,
+            fromMe: false
+        } as WSTraceData);
 
         this.emit(payload.type, payload.data);
     }

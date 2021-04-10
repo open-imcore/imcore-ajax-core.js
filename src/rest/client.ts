@@ -1,4 +1,4 @@
-import { ResourceMode } from '../types';
+import { ResourceMode, RestTraceData, TraceType } from '../types';
 import { IMAttachmentClient } from "./attachment-client";
 import { IMChatClient } from "./chat-client";
 import { IMContactClient } from "./contact-client";
@@ -15,6 +15,7 @@ import { TokenInterceptor } from "./token-interceptor";
 
 export interface IMHTTPClientOptions {
     baseURL: string;
+    trace?: (data: RestTraceData) => void;
     token?: string;
 }
 
@@ -26,6 +27,24 @@ export class IMHTTPClient extends CoreHTTPClient {
         this.token = options.token;
 
         new TokenInterceptor(this);
+
+        this.axios.interceptors.response.use((res) => {
+            if (options.trace) {
+                options.trace({
+                    type: TraceType.rest,
+                    timestamp: Date.now(),
+                    route: res.config.url!,
+                    method: res.config.method!,
+                    response: {
+                        status: res.status,
+                        body: res.data
+                    },
+                    body: res.config.data
+                })
+            }
+
+            return res;
+        });
     }
 
     /**
