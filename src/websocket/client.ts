@@ -104,7 +104,11 @@ export class IMWebSocketClient extends EventEmitter {
             }
         });
 
-        this.socket.addEventListener('open', () => {
+        this.socket.addEventListener('open', async () => {
+            while (this.socket.readyState === this.socket.CONNECTING) {
+                await new Promise(resolve => setTimeout(resolve, 1));
+            }
+
             if (this.token) {
                 this.send({
                     type: CommandType.identify,
