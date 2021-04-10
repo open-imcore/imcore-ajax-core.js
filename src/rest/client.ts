@@ -52,6 +52,14 @@ export class IMHTTPClient extends CoreHTTPClient {
         return `${this.baseURL}${contact(contactID)}/photo`
     }
 
+    public async fetchContactPhoto(contactID: string): Promise<Blob> {
+        const { data } = await this.get<Blob>(this.contactPhotoURL(contactID), {
+            responseType: "blob"
+        });
+
+        return data;
+    }
+
     public async getResourceMode(): Promise<ResourceMode> {
         const { data: { mode } } = await this.get(resource("mode"));
 

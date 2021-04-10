@@ -27,4 +27,8 @@ export class IMAttachmentClient extends ReliantHTTPClient {
 
         return attachmentRepresentation;
     }
+
+    public async load(id: string): Promise<Blob> {
+        return (await this.axios.get<Blob>(`${this.baseURL}${attachments}/${id}`, { responseType: "blob" })).data
+    }
 }

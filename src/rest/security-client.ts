@@ -67,7 +67,7 @@ export class IMSecurityClient extends ReliantHTTPClient {
      * Opens an attachment session allowing <img> tags to load
      */
     async attachmentSession() {
-        await this.get(securityAttachmentsSession);
+        await this.get(securityAttachmentsSession, { withCredentials: true });
     }
 
     /**
